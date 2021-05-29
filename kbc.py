@@ -1,5 +1,5 @@
 from questions import QUESTIONS
-
+import random
 
 def isAnswerCorrect(question, answer):
 
@@ -10,15 +10,37 @@ def isAnswerCorrect(question, answer):
         True if the answer is correct
         False if the answer is incorrect
     '''
-    return question['answer'] == answer 
+    return question["answer"] == answer 
 
 
-def lifeLine(ques):
+def lifeLinefun(ques,i):
 
     '''
     :param ques: The question for which the lifeline is asked for. (Type JSON)
     :return: delete the key for two incorrect options and return the new ques value. (Type JSON)
     '''
+    a = ques["answer"]
+    b = ques["answer"]
+    while a == ques["answer"]:
+        a = random.randint(1,4)
+    while b == ques["answer"] or b == a : 
+        b = random.randint(1,4)
+    print(f'\tQuestion {i+1}: {ques["name"]}' )
+    print(f'\t\tOptions:')
+    for x in range(1,5):
+        if a != x and b != x : 
+            if x==1:
+                print(f'\t\t\tOption {x}: {QUESTIONS[i]["option1"]}')
+            elif x==2:
+                print(f'\t\t\tOption {x}: {QUESTIONS[i]["option2"]}')
+            elif x==3:
+                print(f'\t\t\tOption {x}: {QUESTIONS[i]["option3"]}')
+            elif x==4:
+                print(f'\t\t\tOption {x}: {QUESTIONS[i]["option4"]}')
+    ans = input('Your choice from give option : ')
+    return ans 
+
+
 
 
 def kbc():
@@ -50,7 +72,7 @@ def kbc():
     minimum_winnig_prize = 0
     print("\nINSTRUCTION\n")
     print("For using Lifeline use 5.\nfor Quiting the game use q character .")
-    print("You cannot able to use Lifeline if you are in last Question although you have not used your lifeline till last Question\n.")
+    print("You cannot able to use Lifeline if you are in last Question although you have not used your lifeline till last Question.\n")
     while i < 15 and not quit :
 
         #  Display a welcome message only once to the user at the start of the game.
@@ -67,8 +89,9 @@ def kbc():
 
         # check for the input validations
         if int(ans) == 5 :
-            if lifeLine == 0 :
+            if lifeLine == 0 and i != 14 :
                 lifeLine = 1
+                ans = lifeLinefun(QUESTIONS[i],i)
             else :
                 print("You already used the life line.")
                 continue 

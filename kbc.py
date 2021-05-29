@@ -10,8 +10,7 @@ def isAnswerCorrect(question, answer):
         True if the answer is correct
         False if the answer is incorrect
     '''
-
-    return True if answer == 2 else False      #remove this
+    return question['answer'] == answer 
 
 
 def lifeLine(ques):
@@ -43,31 +42,55 @@ def kbc():
         * If the user inputs "quit" (case insensitive) as input, then user returns with the amount he has won until now,
             instead of the minimum amount.
     '''
+    i = 0
+    lifeLine = 0
+    quit = False
+    winning_prize = 0
+    current_amount = 0
+    minimum_winnig_prize = 0
+    print("\nINSTRUCTION\n")
+    print("For using Lifeline use 5.\nfor Quiting the game use q character .")
+    print("You cannot able to use Lifeline if you are in last Question although you have not used your lifeline till last Question\n.")
+    while i < 15 and not quit :
 
-    #  Display a welcome message only once to the user at the start of the game.
-    #  For each question, display the prize won until now and available life line.
-    # For now, the below code works for only one question without LIFE-LINE and QUIT checks
+        #  Display a welcome message only once to the user at the start of the game.
+        #  For each question, display the prize won until now and available life line.
+        # For now, the below code works for only one question without LIFE-LINE and QUIT checks
 
-    print(f'\tQuestion 1: {QUESTIONS[0]["name"]}' )
-    print(f'\t\tOptions:')
-    print(f'\t\t\tOption 1: {QUESTIONS[0]["option1"]}')
-    print(f'\t\t\tOption 2: {QUESTIONS[0]["option2"]}')
-    print(f'\t\t\tOption 3: {QUESTIONS[0]["option3"]}')
-    print(f'\t\t\tOption 4: {QUESTIONS[0]["option4"]}')
-    ans = input('Your choice ( 1-4 ) : ')
+        print(f'\tQuestion {i+1}: {QUESTIONS[i]["name"]}' )
+        print(f'\t\tOptions:')
+        print(f'\t\t\tOption 1: {QUESTIONS[i]["option1"]}')
+        print(f'\t\t\tOption 2: {QUESTIONS[i]["option2"]}')
+        print(f'\t\t\tOption 3: {QUESTIONS[i]["option3"]}')
+        print(f'\t\t\tOption 4: {QUESTIONS[i]["option4"]}')
+        ans = input('Your choice ( 1-4 ) : ')
 
-    # check for the input validations
+        # check for the input validations
+        if int(ans) == 5 :
+            if lifeLine == 0 :
+                lifeLine = 1
+            else :
+                print("You already used the life line.")
+                continue 
+        if ans == "q":
+            quit = True
+            continue 
+        
+        if isAnswerCorrect(QUESTIONS[i], int(ans) ):
+            # print the total money won.
+            # See if the user has crossed a level, print that if yes
+            print('\nCorrect !')
+            if i == 4 : 
+                minimum_winnig_prize = int(QUESTIONS[i]["money"]) 
+            elif i == 10 : 
+                minimum_winnig_prize = int(QUESTIONS[i]["money"]) 
+            print( "current price = {} \nminimum winnig price = {} ".format(QUESTIONS[i]["money"],minimum_winnig_prize))
 
-    if isAnswerCorrect(QUESTIONS[0], int(ans) ):
-        # print the total money won.
-        # See if the user has crossed a level, print that if yes
-        print('\nCorrect !')
-
-    else:
-        # end the game now.
-        # also print the correct answer
-        print('\nIncorrect !')
-
+        else:
+            # end the game now.
+            # also print the correct answer
+            print('\nIncorrect !')
+        i += 1 
     # print the total money won in the end.
 
 

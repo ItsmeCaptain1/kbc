@@ -19,7 +19,7 @@ QUESTIONS = [
         },
         {
             "name": "What are the major languages spoken in Andhra Pradesh?",
-            "option1": " English and Telugu",
+            "option1": "English and Telugu",
             "option2": "Telugu and Urdu",
             "option3": "Telugu and Kannada",
             "option4": "All of the above languages",

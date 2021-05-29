@@ -68,12 +68,13 @@ def kbc():
     lifeLine = 0
     quit = False
     winning_prize = 0
+    lost = 0
     current_amount = 0
     minimum_winnig_prize = 0
     print("\nINSTRUCTION\n")
     print("For using Lifeline use 5.\nfor Quiting the game use q character .")
     print("You cannot able to use Lifeline if you are in last Question although you have not used your lifeline till last Question.\n")
-    while i < 15 and not quit :
+    while i < 15 and not quit and not lost :
 
         #  Display a welcome message only once to the user at the start of the game.
         #  For each question, display the prize won until now and available life line.
@@ -88,6 +89,10 @@ def kbc():
         ans = input('Your choice ( 1-4 ) : ')
 
         # check for the input validations
+        if ans == "q":
+            quit = True
+            continue 
+
         if int(ans) == 5 :
             if lifeLine == 0 and i != 14 :
                 lifeLine = 1
@@ -95,13 +100,12 @@ def kbc():
             else :
                 print("You already used the life line.")
                 continue 
-        if ans == "q":
-            quit = True
-            continue 
+        
         
         if isAnswerCorrect(QUESTIONS[i], int(ans) ):
             # print the total money won.
             # See if the user has crossed a level, print that if yes
+            current_amount = QUESTIONS[i]["money"]
             print('\nCorrect !')
             if i == 4 : 
                 minimum_winnig_prize = int(QUESTIONS[i]["money"]) 
@@ -113,7 +117,14 @@ def kbc():
             # end the game now.
             # also print the correct answer
             print('\nIncorrect !')
+            lost = 1
         i += 1 
+    if lost : 
+        print("Congratualation You Won {}".format(minimum_winnig_prize))
+    elif quit : 
+        print("Congratualation You Won {}".format(current_amount))
+    else:
+        print("You Become Crorepati {}".format(current_amount))
     # print the total money won in the end.
 
 
